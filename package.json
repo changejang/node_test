@@ -1,0 +1,41 @@
+{
+  "name": "node_test",
+  "version": "1.0.0",
+  "description": "node test",
+  "type": "module",
+  "main": "./src/app.js",
+  "scripts": {
+    "local": "NODE_ENV=LOCAL nodemon --experimental-specifier-resolution=node ./src/index.js",
+    "prod": "pm2 start ecosystem.config.js --env web_prod"
+  },
+  "repository": "git@github.com:changejang/node_test.git",
+  "author": "changejang <changejang@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.4.1",
+    "eslint-config-airbnb": "^19.0.2",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
+    "jest": "^27.4.5",
+    "lint-staged": "^12.1.2",
+    "prettier": "^2.5.1",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.3.0"
+  },
+  "dependencies": {
+    "argon2": "^0.28.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "http-status": "^1.5.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "method-override": "^3.0.0",
+    "mongoose": "^6.1.2",
+    "morgan": "^1.10.0",
+    "short-unique-id": "^4.4.4",
+    "winston": "^3.3.3"
+  }
+}
