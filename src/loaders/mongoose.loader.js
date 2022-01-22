@@ -4,13 +4,16 @@ import { logger } from "../lib";
 
 mongoose.Promise = global.Promise;
 
-const mongooseConnection = async () => {
-  logger.info("Mongoose loader!");
-  try {
-    await mongoose.connect(databaseURL);
-  } catch (error) {
-    logger.error(error);
+class DBLoader {
+  // eslint-disable-next-line class-methods-use-this
+  async connect() {
+    logger.info("Mongoose loader!");
+    try {
+      await mongoose.connect(databaseURL);
+    } catch (error) {
+      logger.error(error);
+    }
   }
-};
+}
 
-export default mongooseConnection;
+export default DBLoader;

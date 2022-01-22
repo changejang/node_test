@@ -12,6 +12,10 @@
   "author": "changejang <changejang@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@babel/eslint-parser": "^7.16.5",
+    "@babel/eslint-plugin": "^7.16.5",
+    "@babel/plugin-syntax-top-level-await": "^7.14.5",
+    "@babel/plugin-transform-modules-commonjs": "^7.16.8",
     "eslint": "^8.4.1",
     "eslint-config-airbnb": "^19.0.2",
     "eslint-config-prettier": "^8.3.0",
@@ -20,9 +24,7 @@
     "husky": "^7.0.4",
     "jest": "^27.4.5",
     "lint-staged": "^12.1.2",
-    "prettier": "^2.5.1",
-    "swagger-jsdoc": "^6.1.0",
-    "swagger-ui-express": "^4.3.0"
+    "prettier": "^2.5.1"
   },
   "dependencies": {
     "argon2": "^0.28.3",
@@ -36,6 +38,8 @@
     "mongoose": "^6.1.2",
     "morgan": "^1.10.0",
     "short-unique-id": "^4.4.4",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.3.0",
     "winston": "^3.3.3"
   }
 }

@@ -1,61 +1,79 @@
-import cors from "cors";
-import express from "express";
+import express, { Router } from "express";
 import methodOverride from "method-override";
 import morgan from "morgan";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 
 import { api, nodeEnv } from "../config";
-import controllers from "../controllers";
 import { logger, errorMiddleware, error404, errorHandler } from "../lib";
-import models from "../models";
-import routes from "../routes";
-import services from "../services";
 
-export default async ({ app }) => {
-  logger.info("Express loader!");
+class ExpressLoader {
+  app;
 
-  app.get("/status", (req, res) => {
-    res.status(200).end();
-  });
-
-  app.head("/status", (req, res) => {
-    res.status(200).end();
-  });
-
-  app.use(methodOverride());
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
-  app.enable("trust proxy");
-  app.use(cors());
-
-  if (nodeEnv === "local") {
-    const options = {
-      swaggerDefinition: {
-        info: {
-          title: "REST API",
-          version: "1.0.0",
-          description: "Example docs",
-        },
-      },
-      apis: ["swagger.yaml"],
-    };
-
-    const specs = swaggerJSDoc(options);
-    // app.use(morgan('combined'));
-    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
-  } else {
-    app.use(morgan("combined"));
+  constructor(controllers) {
+    this.app = express();
+    logger.info("Express Loader");
+    this.initializeExpress();
+    this.initializeErrorHandling();
+    this.initializeControllers(controllers);
+    this.initializeSwagger();
   }
 
-  logger.info(`router: ${api.prefix}`);
+  listen() {
+    const port = process.env.PORT || 3000;
+    this.app.listen(port, () => {
+      logger.log(`Example app listening at http://localhost:${port}`);
+    });
+  }
 
-  const service = services(models);
-  const controller = controllers(service);
-  app.use(api.prefix, routes({ controller }));
+  initializeExpress() {
+    this.app.use(methodOverride());
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+  }
 
-  // Error Handling
-  app.use(error404);
-  app.use(errorMiddleware);
-  app.use(errorHandler);
-};
+  initializeSwagger() {
+    if (nodeEnv === "local") {
+      const options = {
+        swaggerDefinition: {
+          info: {
+            title: "REST API",
+            version: "1.0.0",
+            description: "Example docs",
+          },
+        },
+        apis: ["swagger.yaml"],
+      };
+
+      const specs = swaggerJSDoc(options);
+      // app.use(morgan('combined'));
+      this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+    } else {
+      this.app.use(morgan("combined"));
+    }
+  }
+
+  initializeErrorHandling() {
+    this.app.use(error404);
+    this.app.use(errorMiddleware);
+    this.app.use(errorHandler);
+  }
+
+  initializeControllers(controllers) {
+    const router = Router();
+
+    this.app.get("/status", (req, res) => {
+      res.status(200).end();
+    });
+
+    this.app.head("/status", (req, res) => {
+      res.status(200).end();
+    });
+    controllers.forEach((controller) => {
+      router.use(controller.router);
+    });
+    this.app.use(api, router);
+  }
+}
+
+export default ExpressLoader;
