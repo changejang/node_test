@@ -1,16 +1,23 @@
-import { ExpressLoader, DBLoader } from './loaders';
+import { DBLoader } from './loaders';
 import { BoardRoute, CommentRoute } from './routes';
 import { BoardController, CommentController } from './controllers';
 import { BoardService, CommentService } from './services';
-import { boardModel, commentModel } from './models';
+import { BoardModel, boardSchema, CommentModel, commentSchema } from './models';
+import ExpressLoader from './loaders/express.loader.js';
+import { logger } from './lib';
 
 const start = async () => {
   const dbLoader = new DBLoader();
-  await dbLoader.connect();
+  logger.info('stert');
 
+  await dbLoader.connect();
   const app = new ExpressLoader([
-    new BoardRoute(BoardController, BoardService, boardModel),
-    new CommentRoute(CommentController, CommentService, commentModel),
+    new BoardRoute(BoardController, BoardService, new BoardModel(boardSchema)),
+    new CommentRoute(
+      CommentController,
+      CommentService,
+      new CommentModel(commentSchema),
+    ),
   ]);
   app.listen();
 };

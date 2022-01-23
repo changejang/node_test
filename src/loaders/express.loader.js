@@ -14,15 +14,15 @@ class ExpressLoader {
     this.app = express();
     logger.info('Express Loader');
     this.initializeExpress();
-    this.initializeErrorHandling();
     this.initializeControllers(controllers);
     this.initializeSwagger();
+    this.initializeErrorHandling();
   }
 
   listen() {
     const port = process.env.PORT || 3000;
     this.app.listen(port, () => {
-      logger.log(`Example app listening at http://localhost:${port}`);
+      logger.info(`Example app listening at http://localhost:${port}`);
     });
   }
 
@@ -61,7 +61,6 @@ class ExpressLoader {
 
   initializeControllers(controllers) {
     const router = Router();
-
     this.app.get('/status', (req, res) => {
       res.status(200).end();
     });
@@ -72,7 +71,7 @@ class ExpressLoader {
     controllers.forEach((controller) => {
       router.use(controller.router);
     });
-    this.app.use(api, router);
+    this.app.use(api.prefix, router);
   }
 }
 

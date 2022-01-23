@@ -10,4 +10,6 @@ export default class CommentRoute {
   constructor(Controller, Service, model) {
     this.controller = new Controller(Service, model);
   }
+
+  router() {}
 }

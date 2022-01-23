@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import ShortUniqueId from 'short-unique-id';
+import commonModel from './model.js';
 
-const { ObjectId, Schema, model } = mongoose;
-
+const { Schema, model, ObjectId } = mongoose;
 const createShortId = new ShortUniqueId({ length: 5 });
 
 const Comment = new Schema(
@@ -25,11 +25,19 @@ const Comment = new Schema(
     timestamps: true,
   },
 );
-
 Comment.pre('save', function save(next) {
   const commentId = createShortId();
   this.set({ commentId });
   next();
 });
 
-export default model('Comment', Comment);
+export class CommentModel extends commonModel {
+  model = null;
+
+  constructor(boardModel) {
+    super(model);
+    this.model = boardModel;
+  }
+}
+
+export const commentSchema = model('Comment', Comment);

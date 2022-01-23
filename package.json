@@ -5,7 +5,7 @@
   "type": "module",
   "main": "./src/app.js",
   "scripts": {
-    "local": "NODE_ENV=LOCAL nodemon --experimental-specifier-resolution=node ./src/index.js",
+    "local": "NODE_ENV=LOCAL nodemon --experimental-specifier-resolution=node ./src/app.js",
     "prod": "pm2 start ecosystem.config.js --env web_prod"
   },
   "repository": "git@github.com:changejang/node_test.git",
