@@ -17,6 +17,7 @@
         "printWidth": 80
       }
     ],
+    "class-methods-use-this": "off",
     "import/prefer-default-export": "off",
     "import/extensions": ["off"] // 확장자 있어도 괜찮게
   },

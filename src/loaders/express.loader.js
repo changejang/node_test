@@ -14,8 +14,8 @@ class ExpressLoader {
     this.app = express();
     logger.info('Express Loader');
     this.initializeExpress();
-    this.initializeControllers(controllers);
     this.initializeSwagger();
+    this.initializeControllers(controllers);
     this.initializeErrorHandling();
   }
 
@@ -33,24 +33,21 @@ class ExpressLoader {
   }
 
   initializeSwagger() {
-    if (nodeEnv === 'local') {
-      const options = {
-        swaggerDefinition: {
-          info: {
-            title: 'REST API',
-            version: '1.0.0',
-            description: 'Example docs',
-          },
+    logger.info('Swagger: ');
+    const options = {
+      swaggerDefinition: {
+        info: {
+          title: 'Node.js',
+          version: '1.0.0',
+          description: 'Board',
         },
-        apis: ['swagger.yaml'],
-      };
+      },
+      apis: ['swagger.yaml'],
+    };
 
-      const specs = swaggerJSDoc(options);
-      // app.use(morgan('combined'));
-      this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-    } else {
-      this.app.use(morgan('combined'));
-    }
+    const specs = swaggerJSDoc(options);
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+    this.app.use(morgan('combined'));
   }
 
   initializeErrorHandling() {

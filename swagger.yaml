@@ -1,0 +1,74 @@
+tags:
+  - name: Node App
+    description: Board API
+
+paths:
+  # Status
+  /status:
+    get:
+      tags:
+        - status
+      summary: Server status
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+  # Board
+  /api/board:
+    get:
+      tags:
+        - Board
+      summary: Get All
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+    post:
+      tags:
+        - Board
+      summary: Create Board
+      parameters:
+        - name: body
+          in: body
+          description: Board Data
+          required: true
+          schema:
+            $ref: '#/definitions/board'
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+  /api/board/{id}:
+    delete:
+      tags:
+        - Board
+      summary: Delete Board
+      parameters:
+        - name: id
+          in: path
+          description: Delete Id
+          required: true
+
+# definitions
+definitions:
+  board:
+    type: object
+    required:
+      - name
+    properties:
+      author:
+        type: string
+      password:
+        type: string
+      content:
+        type: string
+      title:
+        type: string
+    example:
+      author: Jang
+      content: Hi!
+      password: qwertyuiop
+      title: Hi ~

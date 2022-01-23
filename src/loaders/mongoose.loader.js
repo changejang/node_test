@@ -5,10 +5,10 @@ import { logger } from '../lib';
 mongoose.Promise = global.Promise;
 
 class DBLoader {
-  // eslint-disable-next-line class-methods-use-this
   async connect() {
     try {
       await mongoose.connect(databaseURL);
+      logger.info('DB Connected!');
     } catch (error) {
       logger.error(error);
     }

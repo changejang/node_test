@@ -6,6 +6,9 @@ Express / MongoDB
 - Install project dependencies — yarn install
 - launch the app — yarn *local*(env)
 
+http://localhost:3012/api-docs
+
+http://localhost:3012
 ## Directory Structure
 
 ## API
