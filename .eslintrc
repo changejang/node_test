@@ -6,12 +6,19 @@
   "parserOptions": {
     "ecmaVersion": 12,
     "sourceType": "module"
-
   },
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "semi": true,
+        "trailingComma": "all",
+        "singleQuote": true,
+        "printWidth": 80
+      }
+    ],
     "import/prefer-default-export": "off",
-    "import/extensions": [ "off" ] // 확장자 있어도 괜찮게
+    "import/extensions": ["off"] // 확장자 있어도 괜찮게
   },
   "plugins": ["prettier", "@babel"],
   "parser": "@babel/eslint-parser"

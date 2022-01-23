@@ -1,6 +1,6 @@
-import { logger } from "../lib";
-import board from "./board.model.js";
-import comment from "./comment.model.js";
+import { logger } from '../lib';
+import board from './board.model.js';
+import comment from './comment.model.js';
 
 class Model {
   constructor(model) {
@@ -19,9 +19,6 @@ class Model {
 }
 
 const boardModel = new Model(board);
-const userModel = new Model(user);
+const commentModel = new Model(comment);
 
-export default {
-  taskModel,
-  userModel,
-};
+export { boardModel, commentModel };

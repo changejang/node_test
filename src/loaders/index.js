@@ -1,7 +1,4 @@
-import ExpressLoader from "./express.loader.js";
-import DBLoader from "./mongoose.loader.js";
+import ExpressLoader from './express.loader.js';
+import DBLoader from './mongoose.loader.js';
 
-export default {
-  ExpressLoader,
-  DBLoader,
-};
+export { ExpressLoader, DBLoader };

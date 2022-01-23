@@ -1,4 +1,4 @@
-import status from "http-status";
+import status from 'http-status';
 
 class ApiError extends Error {
   constructor(statusCode, message, isOperational = true) {
@@ -13,18 +13,18 @@ class ApiError extends Error {
 
 // 404 error middleware
 const error404 = (req, res, next) => {
-  const error = new ApiError(404, "404 Not Found1");
+  const error = new ApiError(404, '404 Not Found1');
   error.status = 404;
   next(error);
 };
 
 // UnauthorizedError and client Error middleware
 const errorMiddleware = (err, req, res, next) => {
-  if (err.name === "UnauthorizedError") {
+  if (err.name === 'UnauthorizedError') {
     return res.status(err.status).send({ message: err.message }).end();
   }
   if (req.xhr) {
-    return res.status(500).send({ error: "Something failed!" });
+    return res.status(500).send({ error: 'Something failed!' });
   }
   return next(err);
 };

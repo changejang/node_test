@@ -1,6 +1,6 @@
-import winston from "winston";
+import winston from 'winston';
 
-import { logs } from "../config";
+import { logs } from '../config';
 
 const transports = [];
 const logLevels = {
@@ -14,20 +14,20 @@ const logLevels = {
     dev: 6,
   },
   colors: {
-    error: "red",
-    warn: "darkred",
-    info: "red",
-    http: "green",
-    sql: "blue",
-    debug: "gray",
-    dev: "yellow",
+    error: 'red',
+    warn: 'darkred',
+    info: 'red',
+    http: 'green',
+    sql: 'blue',
+    debug: 'gray',
+    dev: 'yellow',
   },
 };
 winston.addColors(logLevels.colors);
 
 if (
-  process.env.NODE_ENV !== "development" &&
-  process.env.NODE_ENV !== "local"
+  process.env.NODE_ENV !== 'development' &&
+  process.env.NODE_ENV !== 'local'
 ) {
   transports.push(new winston.transports.Console());
 } else {
@@ -37,15 +37,15 @@ if (
         winston.format.cli(),
         winston.format.splat(),
         winston.format.timestamp({
-          format: "YY-MM-DD HH:mm:ss",
+          format: 'YY-MM-DD HH:mm:ss',
         }),
         winston.format.errors({ stack: true }),
         winston.format.json(),
         winston.format.splat(),
         winston.format.colorize(),
-        winston.format.simple()
+        winston.format.simple(),
       ),
-    })
+    }),
   );
 }
 

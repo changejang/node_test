@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import ShortUniqueId from "short-unique-id";
+import mongoose from 'mongoose';
+import ShortUniqueId from 'short-unique-id';
 
 const { ObjectId, Schema, model } = mongoose;
 
@@ -18,17 +18,18 @@ const Comment = new Schema(
     },
     boardId: {
       type: ObjectId,
+      ref: 'Board',
     },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-Comment.pre("save", function save(next) {
+Comment.pre('save', function save(next) {
   const commentId = createShortId();
   this.set({ commentId });
   next();
 });
 
-export default model("Comment", Comment);
+export default model('Comment', Comment);
