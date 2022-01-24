@@ -1,5 +1,5 @@
 import argon2 from 'argon2';
-import { logger } from '../lib';
+import { logger, keyword } from '../lib';
 
 export default class BoardService {
   model = null;
@@ -11,12 +11,13 @@ export default class BoardService {
   async create(body) {
     const { title, content, author, password } = body;
     const hashedPassword = await argon2.hash(password);
-    const result = this.model.create({
+    const result = await this.model.create({
       title,
       content,
       author,
       password: hashedPassword,
     });
+    if (result?.boardId) await keyword.search(content);
     return result;
   }
 

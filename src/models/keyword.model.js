@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import ShortUniqueId from 'short-unique-id';
 import commonModel from './model.js';
 
-const { Schema, model, ObjectId } = mongoose;
+const { Schema, model } = mongoose;
 const createShortId = new ShortUniqueId({ length: 5 });
 
 const Keyword = new Schema(
@@ -10,15 +10,11 @@ const Keyword = new Schema(
     keywordId: {
       type: String,
     },
-    content: {
+    keyword: {
       type: String,
     },
-    author: {
-      type: String,
-    },
-    boardId: {
-      type: ObjectId,
-      ref: 'Board',
+    users: {
+      type: [],
     },
   },
   {
@@ -37,6 +33,11 @@ export class KeywordModel extends commonModel {
   constructor(keywordModel) {
     super(model);
     this.model = keywordModel;
+  }
+
+  async deleteMany(query) {
+    const result = await this.model.deleteMany(query);
+    return result;
   }
 }
 

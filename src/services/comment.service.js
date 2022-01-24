@@ -1,5 +1,4 @@
-import argon2 from 'argon2';
-import { logger } from '../lib/index.js';
+import { logger, keyword } from '../lib/index.js';
 
 export default class CommentService {
   model = null;
@@ -10,12 +9,13 @@ export default class CommentService {
 
   async create(body, boardId, commentId = null) {
     const { content, author } = body;
-    const result = this.model.create({
+    const result = await this.model.create({
       content,
       author,
       boardId,
       parentId: commentId,
     });
+    if (result?.commentId) await keyword.search(content);
     return result;
   }
 

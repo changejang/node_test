@@ -177,7 +177,7 @@ definitions:
         type: string
     example:
       author: Jang
-      content: Hi!
+      content: Hi! jang
       password: qwertyuiop
       title: Hi ~
   boardUpdate:
@@ -195,7 +195,7 @@ definitions:
         type: string
     example:
       author: Jang1
-      content: Hi1!
+      content: Hi1! jang
       password: qwertyuiop1
       title: Hi1 ~
   boardDelete:
@@ -216,4 +216,4 @@ definitions:
         type: string
     example:
       author: Jang
-      content: Hi!
+      content: Hi! jang
