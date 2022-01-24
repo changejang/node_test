@@ -5,16 +5,33 @@ export default class Model {
     this.model = model;
   }
 
-  create() {}
-
-  findById() {}
-
-  async find() {
-    const result = await this.model.find({}).exec();
+  async create(body) {
+    const result = await this.model.create(body);
     return result;
   }
 
-  updateById() {}
+  async findById(query) {
+    const result = await this.model.findOne(query);
+    return result;
+  }
 
-  deleteById() {}
+  async find(query, page, limit) {
+    const result = await this.model.find(query, null, {
+      skip: (page - 1) * limit,
+      limit,
+    });
+    return result;
+  }
+
+  async update(query, body) {
+    const result = await this.model.findOneAndUpdate(query, body);
+    return result;
+  }
+
+  async delete(query) {
+    const result = await this.model.deleteOne(query);
+    return result;
+  }
+
+  async search(query) {}
 }

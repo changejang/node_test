@@ -5,9 +5,9 @@ import commonModel from './model.js';
 const { Schema, model, ObjectId } = mongoose;
 const createShortId = new ShortUniqueId({ length: 5 });
 
-const Comment = new Schema(
+const Keyword = new Schema(
   {
-    commentId: {
+    keywordId: {
       type: String,
     },
     content: {
@@ -17,29 +17,27 @@ const Comment = new Schema(
       type: String,
     },
     boardId: {
-      type: String,
-    },
-    parentId: {
-      type: String,
+      type: ObjectId,
+      ref: 'Board',
     },
   },
   {
     timestamps: true,
   },
 );
-Comment.pre('save', function save(next) {
-  const commentId = createShortId();
-  this.set({ commentId });
+Keyword.pre('save', function save(next) {
+  const keywordId = createShortId();
+  this.set({ keywordId });
   next();
 });
 
-export class CommentModel extends commonModel {
+export class KeywordModel extends commonModel {
   model = null;
 
-  constructor(boardModel) {
+  constructor(keywordModel) {
     super(model);
-    this.model = boardModel;
+    this.model = keywordModel;
   }
 }
 
-export const commentSchema = model('Comment', Comment);
+export const keywordSchema = model('Keyword', Keyword);

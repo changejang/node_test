@@ -20,6 +20,15 @@ paths:
       tags:
         - Board
       summary: Get All
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          schema:
+            type: integer
       responses:
         200:
           description: 'OK'
@@ -51,6 +60,105 @@ paths:
           in: path
           description: Delete Id
           required: true
+        - name: body
+          in: body
+          description: password
+          required: true
+          schema:
+            $ref: '#/definitions/boardDelete'
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+    put:
+      tags:
+        - Board
+      summary: Update Board
+      parameters:
+        - name: id
+          in: path
+          description: Delete Id
+          required: true
+        - name: body
+          in: body
+          description: Board Data
+          required: true
+          schema:
+            $ref: '#/definitions/boardUpdate'
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+  /api/board/{id}/comment:
+    get:
+      tags:
+        - Board
+      summary: Get All
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - name: id
+          in: path
+          description: Board
+          required: true
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+    post:
+      tags:
+        - Board
+      summary: Create Board
+      parameters:
+        - name: id
+          in: path
+          description: Board Id
+          required: true
+        - name: body
+          in: body
+          description: Comment Data
+          required: true
+          schema:
+            $ref: '#/definitions/comment'
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+  /api/board/{id}/comment/{commentId}:
+    post:
+      tags:
+        - Board
+      summary: Create Board
+      parameters:
+        - name: id
+          in: path
+          description: Board Id
+          required: true
+        - name: commentId
+          in: path
+          description: Comment Id
+          required: true
+        - name: body
+          in: body
+          description: Comment Data
+          required: true
+          schema:
+            $ref: '#/definitions/comment'
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
 
 # definitions
 definitions:
@@ -72,3 +180,40 @@ definitions:
       content: Hi!
       password: qwertyuiop
       title: Hi ~
+  boardUpdate:
+    type: object
+    required:
+      - name
+    properties:
+      author:
+        type: string
+      password:
+        type: string
+      content:
+        type: string
+      title:
+        type: string
+    example:
+      author: Jang1
+      content: Hi1!
+      password: qwertyuiop1
+      title: Hi1 ~
+  boardDelete:
+    type: object
+    properties:
+      password:
+        type: string
+    example:
+      password: qwertyuiop1
+  comment:
+    type: object
+    required:
+      - author
+    properties:
+      author:
+        type: string
+      content:
+        type: string
+    example:
+      author: Jang
+      content: Hi!

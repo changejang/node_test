@@ -11,22 +11,20 @@ export default class BoardRoute {
     this.initializeRouter();
   }
 
-  getController() {
-    return this.controller;
-  }
-
   initializeRouter() {
     const router = Router();
     const path = '/board';
-    router.get('/', asyncWrapper(this.boardList.bind(this)));
-    // .get('/:boardId', asyncWrapper(this.findOrder))
-    // .post('/', asyncWrapper(this.register))
-    // .delete('/:taskId', asyncWrapper(this.deleteOrderById));
+    router
+      .get('/', asyncWrapper(this.controller.find.bind(this.controller)))
+      .post('/', asyncWrapper(this.controller.create.bind(this.controller)))
+      .put(
+        '/:boardId',
+        asyncWrapper(this.controller.update.bind(this.controller)),
+      )
+      .delete(
+        '/:boardId',
+        asyncWrapper(this.controller.delete.bind(this.controller)),
+      );
     this.router.use(path, router);
-  }
-
-  async boardList(req, res) {
-    await this.controller.find();
-    res.send('sc');
   }
 }

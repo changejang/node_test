@@ -5,7 +5,6 @@ export const asyncWrapper = (handler) => async (req, res, next) => {
       success: true,
       response,
     });
-    next();
   } catch (err) {
     next(err);
   }
