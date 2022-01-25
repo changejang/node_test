@@ -24,6 +24,10 @@ export default class BoardRoute {
       .delete(
         '/:boardId',
         asyncWrapper(this.controller.delete.bind(this.controller)),
+      )
+      .get(
+        '/search',
+        asyncWrapper(this.controller.search.bind(this.controller)),
       );
     this.router.use(path, router);
   }

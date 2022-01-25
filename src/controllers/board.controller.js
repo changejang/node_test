@@ -34,4 +34,17 @@ export default class BoardController {
     const result = await this.service.update(req.body, boardId);
     return result;
   }
+
+  async search(req, res, next) {
+    const { keyword } = req.query;
+    const query = new RegExp(keyword);
+    const result = await this.service.find(
+      {
+        $or: [{ title: query }, { author: query }],
+      },
+      1,
+      10,
+    );
+    return result;
+  }
 }

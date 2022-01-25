@@ -56,7 +56,8 @@ yarn local
 - 게시글 삭제
 - 댓글 목록
 - 댓글 작성
-- 게시물, 댓글 알림기능
+- 게시물 검색 기능
+- 게시물, 댓글 키둬드 알림기능
 
 /stats
 `GET` 
@@ -65,15 +66,16 @@ yarn local
 /api/board
 `GET`
 목록 가져오기
+
 REQUEST
-```
+```javascript
 http://localhost:3012/api/board?page=1&limit=1
 page: Number
 Limit: Number
 ```
 
 RESPONSE
-```
+```javascript
 Status: 200
 
 [
@@ -93,8 +95,9 @@ Status: 200
 /api/board
 `POST`
 게시글 작성
+
 REQUEST
-```
+```javascript
 Body: 
 {
   "author": "Jang",
@@ -104,7 +107,7 @@ Body:
 }
 ```
 RESPONSE
-```
+```javascript
 Status: 200
 {
   "boardId": "SqRNr",
@@ -120,8 +123,9 @@ Status: 200
 
 /api/board/:boardId
 `PUT`게시글 수정
+
 Request
-```
+```javascript
 BoardId
 Body:
 {
@@ -132,7 +136,7 @@ Body:
 }
 ```
 Response
-```
+```javascript
 Status: 200
 {
   "_id": "61f00635483ee4895a2eafae",
@@ -146,9 +150,10 @@ Status: 200
 }
 ```
 /api/board/:boardId
-게시글 삭제
+`DELETE` 게시글 삭제
+
 Request
-```
+```javascript
 BoardId
 
 body:
@@ -157,16 +162,40 @@ body:
 }
 ```
 Response
-```
+```javascript
 Status: 200
 {
   "deletedCount": 1
 }
 ```
-/api/board/:boardId/comment
-댓글 목록
+/api/board/search
+`GET`게시물 검색
+
 Request
+```javascript
+http://localhost:3012/api/board/search?keyword=Hi
+Keywrod
+```javascript
+Response
+```[
+  {
+    "_id": "61eea2c38f2f7369d9d2d4ca",
+    "boardId": "YMbYN",
+    "title": "Hi ~",
+    "content": "Hi!",
+    "author": "Jang",
+    "updatedAt": "2022-01-24T12:59:47.722Z",
+    "createdAt": "2022-01-24T12:59:47.722Z",
+    "__v": 0
+  }
+]
 ```
+
+/api/board/:boardId/comment
+`GET`댓글 목록
+
+Request
+```javascript
 http://localhost:3012/api/board/eJTnr/comment?page=1&limit=1
 Page: Number
 Limit: Number
@@ -174,7 +203,7 @@ BoardId
 
 ```
 Response
-```
+```javascript
 Body
 [
   {
@@ -191,9 +220,10 @@ Body
 ]
 ```
 /api/board/:boardId/comment
-댓글 작성
+`POST`댓글 작성
+
 Request
-```
+```javascript
 BoardId,
 Body:
 {
@@ -202,7 +232,7 @@ Body:
 }
 ```
 Response
-```
+```javascript
 Status: 200
 {
   "commentId": "sVJSj",
@@ -217,9 +247,10 @@ Status: 200
 }
 ```
 /api/board/:boardId/comment/:commentId
-댓글 작
+`POST`댓글의 댓글 작성
+
 Request
-```
+```javascript
 BoardId
 CommentId
 Body: 
@@ -229,7 +260,7 @@ Body:
 }
 ```
 Response
-```
+```javascript
 Status: 200
 {
   "commentId": "2ap6n",
@@ -242,6 +273,13 @@ Status: 200
   "createdAt": "2022-01-25T14:36:53.343Z",
   "__v": 0
 }
+```
+
+# 키워드 알림기능
+- 글, 댓글 작성하면 키워드 알림 전송. 
+- Log에 키워드와 전송해야되는 유저 리스트 작성
+```
+2022-01-26 00:20:50  info : Keyword: jang, Users: kim,jang
 ```
 # Models
 ## Board

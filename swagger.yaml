@@ -91,6 +91,21 @@ paths:
           description: 'OK'
         500:
           description: 'Server Error'
+  /api/board/search:
+    get:
+      tags:
+        - Board
+      summary: Search
+      parameters:
+        - in: query
+          name: keyword
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
   /api/board/{id}/comment:
     get:
       tags:

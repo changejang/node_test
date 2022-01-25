@@ -22,6 +22,7 @@ export default class Model {
         limit,
       })
       .select('-password');
+    console.log(query);
     return result;
   }
 
@@ -34,6 +35,4 @@ export default class Model {
     const result = await this.model.deleteOne(query);
     return result;
   }
-
-  async search(query) {}
 }
