@@ -38,4 +38,18 @@ const errorHandler = (err, req, res) => {
   });
 };
 
-export { ApiError, errorMiddleware, errorHandler, error404 };
+class BadRequestException extends Error {
+  constructor(message = 'Unknown Error') {
+    super(message);
+    this.status = 500;
+    this.message = message;
+  }
+}
+
+export {
+  ApiError,
+  errorMiddleware,
+  errorHandler,
+  error404,
+  BadRequestException,
+};

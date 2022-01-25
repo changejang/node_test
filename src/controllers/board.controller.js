@@ -1,3 +1,5 @@
+import { BadRequestException } from '../lib/index.js';
+
 export default class BoardController {
   service = null;
 
@@ -21,16 +23,14 @@ export default class BoardController {
     const { boardId } = req.params;
     const { body } = req;
     const { password } = body;
-    // if (!boardId)
-    //   throw new BadRequestException('유저 정보가 정확하지 않습니다.');
+    if (!boardId) throw new BadRequestException('BoardId를 확인해 주세요');
     const result = await this.service.delete(boardId, password);
     return result;
   }
 
   async update(req, res, next) {
     const { boardId } = req.params;
-    // if (!boardId)
-    //   throw new BadRequestException('유저 정보가 정확하지 않습니다.');
+    if (!boardId) throw new BadRequestException('BoardId를 확인해 주세요');
     const result = await this.service.update(req.body, boardId);
     return result;
   }

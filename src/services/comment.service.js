@@ -1,4 +1,4 @@
-import { logger, keyword } from '../lib/index.js';
+import { BadRequestException, keyword } from '../lib/index.js';
 
 export default class CommentService {
   model = null;
@@ -9,6 +9,7 @@ export default class CommentService {
 
   async create(body, boardId, commentId = null) {
     const { content, author } = body;
+    if (!boardId) throw new BadRequestException('BoardId를 확인해 주세요');
     const result = await this.model.create({
       content,
       author,
@@ -21,7 +22,6 @@ export default class CommentService {
 
   async find(query, page, limit) {
     const result = await this.model.find(query, page, limit);
-    logger.info(result);
     return result;
   }
 

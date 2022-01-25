@@ -1,5 +1,5 @@
 import argon2 from 'argon2';
-import { logger, keyword } from '../lib';
+import { keyword, BadRequestException } from '../lib';
 
 export default class BoardService {
   model = null;
@@ -23,7 +23,6 @@ export default class BoardService {
 
   async find(query, page, limit) {
     const result = await this.model.find(query, page, limit);
-    logger.info(result);
     return result;
   }
 
@@ -34,7 +33,7 @@ export default class BoardService {
 
   async delete(boardId, pw) {
     const board = await this.model.findById({ boardId });
-    // if (!board) error
+    if (!board) throw new BadRequestException('BoardId를 확인해 주세요');
     const { password: hashedPassword } = board;
     const is = await argon2.verify(hashedPassword, pw);
     let result;
@@ -43,7 +42,17 @@ export default class BoardService {
   }
 
   async update(body, boardId) {
-    const result = await this.model.update({ boardId }, body);
+    const board = await this.model.findById({ boardId });
+    if (!board) throw new BadRequestException('BoardId를 확인해 주세요');
+    const { password: hashedPassword } = board;
+    const { password } = body;
+    const is = await argon2.verify(hashedPassword, password);
+    let result;
+    if (is)
+      result = await this.model.update(
+        { boardId },
+        { ...body, password: hashedPassword },
+      );
     return result;
   }
 }

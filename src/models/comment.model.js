@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import ShortUniqueId from 'short-unique-id';
 import commonModel from './model.js';
 
-const { Schema, model, ObjectId } = mongoose;
+const { Schema, model } = mongoose;
 const createShortId = new ShortUniqueId({ length: 5 });
 
 const Comment = new Schema(

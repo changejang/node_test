@@ -14,7 +14,6 @@ export default class CommentController {
 
   async create(req, res, next) {
     const { boardId, commentId } = req.params;
-    // if (commentId) 서브 parentId에 commentId 추가.
     const { body } = req;
     const result = await this.service.create(body, boardId, commentId);
     return result;

@@ -16,10 +16,12 @@ export default class Model {
   }
 
   async find(query, page, limit) {
-    const result = await this.model.find(query, null, {
-      skip: (page - 1) * limit,
-      limit,
-    });
+    const result = await this.model
+      .find(query, null, {
+        skip: (page - 1) * limit,
+        limit,
+      })
+      .select('-password');
     return result;
   }
 
