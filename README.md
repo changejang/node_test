@@ -175,7 +175,7 @@ Request
 ```javascript
 http://localhost:3012/api/board/search?keyword=Hi
 Keywrod
-```javascript
+```
 Response
 ```[
   {
